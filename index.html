@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Générateur de Code QR</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffffff;
+            line-height: 1.6;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        nav {
+            display: flex;
+            justify-content: space-around;
+            background-color: #555;
+            padding: 15px;
+        }
+        nav a {
+            color: white;
+            padding: 15px 20px;
+            text-decoration: none;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+        nav a:hover {
+            background-color: #ddd;
+            color: black;
+        }
+        section {
+            padding: 60px;
+            margin: 20px auto;
+            max-width: 1000px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        section:hover {
+            transform: scale(1.02);
+        }
+        .yellow {
+            background-color: #ffeb3b; /* Jaune */
+        }
+        .red {
+            background-color: #f44336; /* Rouge */
+        }
+        .blue {
+            background-color: #2196f3; /* Bleu */
+        }
+        .orange {
+            background-color: #ff9800; /* Orange */
+        }
+        .qr-section {
+            text-align: center;
+            margin-top: 40px;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 15px 30px;
+            background-color: #333;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #555;
+        }
+        #qrcode {
+            margin-top: 40px;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #333;
+            color: white;
+            margin-top: 40px;
+        }
+        .download-btn {
+            margin-top: 20px;
+            background-color: #4CAF50; /* Vert */
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            color: white;
+            font-size: 1em;
+            display: inline-flex;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        .download-btn:hover {
+            background-color: #45a049;
+        }
+        .download-btn i {
+            margin-right: 5px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</head>
+<body>
+
+    <header>
+        <h1>Générateur de Code QR</h1>
+    </header>
+
+    <nav>
+        <a href="#home">Accueil</a>
+        <a href="#generator">Générateur de QR</a>
+        <a href="#about">À Propos</a>
+        <a href="#add">Ajouter</a>
+    </nav>
+
+    <section id="home" class="yellow">
+        <h2>Bienvenue sur le Générateur de Code QR</h2>
+        <p>Cet outil vous permet de créer facilement vos propres codes QR. Utilisez la section Générateur de QR pour commencer !</p>
+    </section>
+
+    <section id="generator" class="blue qr-section">
+        <h2>Générez Votre Code QR</h2>
+        <input type="text" id="text" placeholder="Entrez le texte ou l'URL">
+        <button onclick="generateQRCode()">Générer le Code QR</button>
+        <div id="qrcode"></div>
+        <button class="download-btn" id="download-btn" style="display: none;" onclick="downloadQRCode()">
+            <i class="fas fa-download"></i> Télécharger le Code QR
+        </button>
+    </section>
+
+    <section id="about" class="orange">
+        <h2>À Propos de Cet Outil</h2>
+        <p>Ce générateur de code QR permet aux utilisateurs de créer des codes QR pour divers usages, comme partager des URLs, du texte ou des informations de contact. Entrez simplement le contenu souhaité dans la section Générateur de QR et cliquez sur 'Générer'.</p>
+        <p><strong>Propriétaire :</strong> Marius</p>
+        <p><strong>Email :</strong> mariuskpan65@gmail.com</p>
+    </section>
+
+    <section id="add" class="red">
+        <h2>Ajouter de Nouvelles Fonctionnalités</h2>
+        <p>Les mises à jour futures incluront plus d'options de personnalisation pour les codes QR, comme des ajustements de couleur et de taille. Restez à l'écoute !</p>
+    </section>
+
+    <footer>
+        <p>Générateur de Code QR © 2024</p>
+    </footer>
+
+    <script>
+        function generateQRCode() {
+            var text = document.getElementById("text").value;
+            document.getElementById("qrcode").innerHTML = "";
+            var qrcode = new QRCode(document.getElementById("qrcode"), {
+                text: text,
+                width: 128,
+                height: 128
+            });
+            document.getElementById("download-btn").style.display = "inline-flex"; // Show download button
+        }
+
+        function downloadQRCode() {
+            var canvas = document.querySelector("#qrcode canvas");
+            var link = document.createElement('a');
+            link.href = canvas.toDataURL("image/png");
+            link.download = 'QRCode.png';
+            link.click();
+        }
+    </script>
+
+    <!-- Include Font Awesome for the download icon -->
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+
+</body>
+  </html>
